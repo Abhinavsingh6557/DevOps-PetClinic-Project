@@ -1,0 +1,9 @@
+services:
+  petclinic:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: petclinic
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
