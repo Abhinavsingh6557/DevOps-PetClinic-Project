@@ -1,0 +1,59 @@
+replicaCount: 1
+
+image:
+  repository: abhinavsingh6557/petclinic-devops
+  pullPolicy: IfNotPresent
+  tag: latest
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: "petclinic-helm"
+
+serviceAccount:
+  create: true
+  automount: false
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30081
+
+ingress:
+  enabled: false
+
+httpRoute:
+  enabled: false
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "600Mi"
+    cpu: "500m"
+
+livenessProbe: null
+readinessProbe: null
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
