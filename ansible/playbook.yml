@@ -1,0 +1,11 @@
+---
+- name: Configure PetClinic EC2 Server
+  hosts: petclinic
+  become: yes
+
+  tasks:
+    - name: Ensure Docker service is running and enabled
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes

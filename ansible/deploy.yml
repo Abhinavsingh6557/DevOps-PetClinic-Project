@@ -1,0 +1,31 @@
+---
+- name: Deploy PetClinic using Ansible
+  hosts: petclinic
+  become: yes
+
+  tasks:
+    - name: Pull PetClinic Docker image
+      community.docker.docker_image:
+        name: abhinavsingh6557/petclinic-devops:latest
+        source: pull
+
+    - name: Ensure PetClinic container is running
+      community.docker.docker_container:
+        name: petclinic
+        image: abhinavsingh6557/petclinic-devops:latest
+        state: started
+        restart_policy: unless-stopped
+        published_ports:
+          - "8080:8080"
+        memory: "600M"
+        memory_swap: "600M"
+
+    - name: Verify PetClinic container is running
+      community.docker.docker_container_info:
+        name: petclinic
+      register: petclinic_info
+
+    - name: Display container status
+      ansible.builtin.debug:
+        msg: "PetClinic container is running: {{ petclinic_info.container.State.Running }}"
+      when: petclinic_info.exists
